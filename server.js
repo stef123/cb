@@ -101,3 +101,4 @@ sio.set('authorization', function (data, accept) {
     } else {
        return accept('No cookie transmitted.', false);
     }
+ }
