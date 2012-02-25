@@ -62,7 +62,8 @@ sio.sockets.on('connection', function (socket) {
     	io.sockets.emit('startmove', movedata);
     	//socket.broadcast.emit('move', movedata);
   	});
-  
+ 
+ 
   	socket.on('timetravel', function (traveldata) {
     	console.log('TEST: ' + traveldata.time);
     	io.sockets.emit('timetravel', traveldata);
