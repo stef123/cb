@@ -6,7 +6,6 @@ var io = require('socket.io'),
     app = express.createServer(),
     sessionStore = new MemoryStore();
  
- 
 app.configure(function () {
     app.use(express.cookieParser());
     app.use(express.session({store: sessionStore
