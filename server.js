@@ -1,13 +1,18 @@
 var app = require('express').createServer()
   , io = require('socket.io').listen(app);
+  
+var http = require('http');
+var url = require('url');
+var fs = require('fs');
 
 app.listen(80);
 
 console.log('CloudBoard SERVER v 0.1.5.4 started');
 
 
+
 io.sockets.on('connection', function (socket) {
-  socket.timeout(0);
+  
   socket.emit('news', { hello: 'world' });
   console.log('WE ARE IN');
     
