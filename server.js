@@ -1,4 +1,4 @@
-
+/*
    var express = require('express');
     var app = express.createServer();
 
@@ -18,7 +18,7 @@ store: new MemoryStore({ reapInterval: 60000 * 10 })
 
    app.listen(4000);
 
-
+*/
 
 var io = require('socket.io'),
     express = require('express'),
