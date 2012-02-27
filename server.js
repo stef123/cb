@@ -2,6 +2,16 @@
 var http = require('http');
 var url = require('url');
 var fs = require('fs');
+var sys = require('sys');
+ 
+var mysql = require('mysql');
+var db = mysql.createClient({
+    host:"mysql.cloudboard.se",
+    user:"web82404_cb",
+    password:"cb123"
+});
+
+
 
 var indexHeader = fs.readFileSync('views/indexHeader.html');
 var indexFooter = fs.readFileSync('views/indexFooter.html');
