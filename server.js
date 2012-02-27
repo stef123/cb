@@ -1,4 +1,24 @@
 
+   var express = require('express');
+    var app = express.createServer();
+
+    var MemoryStore = require('/home/node/node_modules/connect/lib/middleware/session/memory');
+    app.use(express.bodyParser());
+    app.use(express.cookieParser());
+    app.use(express.session({ 
+key: 'some-key',
+secret: 'some-We1rD sEEEEEcret!',
+store: new MemoryStore({ reapInterval: 60000 * 10 }) 
+    }));
+
+   app.get('/', function(req, res){
+   req.session.visitCount = req.session.visitCount ? req.session.visitCount + 1 : 1;
+   res.send('You have visited this page ' + req.session.visitCount + ' times');
+   });
+
+   app.listen(4000);
+
+
 
 var io = require('socket.io'),
     express = require('express'),
@@ -14,6 +34,7 @@ app.configure(function () {
     app.use(function (req, res) {
         res.end('<h2>Hello, your session id is ' + req.sessionID + '</h2>');
     });
+    console.log('our session id is ' + req.sessionID);
 });
 
 
