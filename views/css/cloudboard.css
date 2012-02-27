@@ -1,0 +1,372 @@
+/* Typo stuff*/
+
+body {
+	font-family: Helvetica, Verdana, Arial, sans-serif;
+	color: #ccc;
+	font-size: 14px;
+}
+
+small {
+
+font-size: 10px;
+color: #999;
+}
+
+
+.file-drop, file-drop-hover{
+
+height:80px;
+width: 100px;
+
+}
+
+/* The rest */
+
+body {
+	
+		background: #f9f9f9;
+	padding: 60px 0 0 0;
+	width: 100%;
+}
+
+.header {
+	width: 100%;
+	height: 60px;
+	top: 0px;
+	left: 0px;
+	position: fixed;
+	background: #333;
+	z-index: 1000000;
+	border-bottom: 1px solid #eee;
+	box-shadow: 0 0 10px #222;
+	-moz-box-shadow: 0px 0px 10px #999;
+ 	-webkit-box-shadow: 0px 0px 10px #999;
+ 	box-shadow: 0px 0px 10px #999;
+}
+
+#dynamic {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+
+
+}
+
+.logo {
+	float: left;
+	width: 280px;
+	height: 40px;
+	
+	font-size: 22px;
+	color: #eee;
+	padding: 16px 0 0 10px;
+	
+	
+}
+
+.ontop {
+
+z-index: 1000;
+
+}
+
+#login {
+	float: right;
+	width: 140px;
+	height: 40px;
+	
+	font-size: 12px;
+	color: #ccc;
+	padding: 4px 10px 0 0;
+	
+
+}
+#datum {
+	position: absolute;
+	top: 4px;
+	left: 400px;
+	width: 100px;
+	height: 40px;
+	
+	font-size: 14px;
+	color: #ccc;
+	padding: 4px 0 0 0;
+	
+
+
+
+
+}
+ 
+ /* preformatted WB - will be altered dynamically by php with inline styles, like width and height. */
+.WB {
+	word-wrap: normal;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	position: absolute;
+	width: 100px;
+	height: 100px;
+	/*margin: 20px 0 0 20px;*/
+	padding: 10px 0 40px 0;
+	background: #fff;
+	border: 1px solid #ccc;
+	-moz-box-shadow: 0px 0px 10px #999;
+ 	 -webkit-box-shadow: 0px 0px 10px #999;
+ 	 box-shadow: 0px 0px 10px #999;
+ 	 overflow: none;
+ 	 z-index:10;
+ 	 
+ 	 
+ 	 
+ 	 
+}
+.WB_canvas {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	left: 0px;
+	padding: 4px;
+	z-index: 0;
+	visibility: hidden;
+
+}
+
+.WB:hover {
+	/*background: #fff url(images/WB_bg_hover.jpg) top center;*/
+	
+	}
+	
+.timeslider {
+	width: 600px;
+	height: 5px;
+	background-color: #eee;
+	position: relative;
+	bottom: 0px;
+	left: 320px;
+	top: 28px;
+
+	z-index: 11;
+	
+	}	
+
+#slider{
+	background: #844;
+	border: none 0;
+	top: 0px;
+	}	
+	
+.objHeader {
+
+	position: absolute;
+	width: 100%;
+	height: 20px;
+	border-bottom: 1px solid #333;
+	background: #000;
+	cursor: move;
+	font-size: 14px;
+	font-weight: bold;
+	/*text-shadow: 1px 1px 1px #fff;*/
+	opacity: 0.1;
+	/*border-radius: 4px;*/
+	z-index: 999;
+
+}
+
+.objHeader:hover {
+	opacity: 1;
+	}
+
+.objHeader .kryss {
+
+	color: #fff;
+	margin: 4px 8px 0 0;
+	cursor: pointer;
+	float: right;
+	
+
+}
+
+.objHeader .comment {
+
+	color: #fff;
+	margin: 4px 8px 0 0;
+	cursor: pointer;
+	float: right;
+	
+
+}
+
+.kryss:hover {
+
+	color: #090;
+
+}
+
+
+.header_title {
+float: left;
+width: 60%;
+color: #fff;
+
+}
+
+.menuActivation {
+	float: right;
+	width: 40%;
+
+}
+
+
+
+
+.twitter {
+
+	width: 250px;
+	position: absolute;
+	
+
+}
+
+
+.twitter:hover {
+
+-moz-box-shadow: 0px 0px 10px #999;
+ 	-webkit-box-shadow: 0px 0px 10px #999;
+ 	box-shadow: 0px 0px 10px #999;
+
+}
+
+
+.vimeobox {
+	width: 400px;
+	position: absolute;
+
+}
+
+.vimeobox:hover {
+
+-moz-box-shadow: 0px 0px 10px #999;
+ 	-webkit-box-shadow: 0px 0px 10px #999;
+ 	box-shadow: 0px 0px 10px #999;
+
+}
+.textbox_container {
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	
+	padding: 0;
+	border: 1px solid #ccc;
+	position: absolute;
+	background: #fafafa;
+	z-index: 10;
+	/*margin:140px 0 0 600px;*/
+	
+	
+}
+.textbox_container:hover {
+-moz-box-shadow: 0px 0px 10px #999;
+ 	-webkit-box-shadow: 0px 0px 10px #999;
+ 	box-shadow: 0px 0px 10px #999;
+
+}
+
+
+.textbox_header {
+	-webkit-border-radius: 4px 4px 0px 0px;
+	-moz-border-radius: 4px 4px 0px 0px;
+	border-radius: 4px 4px 0px 0px;
+	border-bottom: 1px solid #333;
+	width: 100%;
+	height: 26px;
+	background: #ada;
+	padding: 0px;
+	position: relative;
+	/*top: 0px;
+	left: 0px;*/
+	
+	}
+
+.textbox_header p{
+	padding: 7px 7px 7px;
+	position: relative;
+	top: 0px;
+	left: 0px;
+	color: #777;
+	text-shadow: 0px 1px 1px #fff;
+	font-size: 14px;
+	
+	}
+	
+.textbox_content {
+	word-wrap: break-word;
+	position: relative;
+	top: 20px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	
+
+	}
+.textbox_content p{
+	
+	word-wrap: break-word;
+	color: #333;
+	padding: 4px;
+	font-size: 14px;
+	
+}
+.imagebox {
+	width: 450px;
+	height: 300px;
+	border: 1px solid #444;
+	position: absolute;
+	z-index: 12;
+	
+	}
+.imagebox:hover {	
+-moz-box-shadow: 0px 0px 10px #999;
+ 	-webkit-box-shadow: 0px 0px 10px #999;
+ 	box-shadow: 0px 0px 10px #999;
+}
+.imagebox_footer {
+	height: 30px;
+	
+	}
+	
+.dialog{
+
+	font-size: 14px;
+	display: none;
+	opacity: 1;
+	
+	}
+#dialog p {
+	font-size: 12px;
+	
+	}
+#dialog form {
+	font-size: 12px;
+	
+	}
+	
+.ui-corner-all {
+    -webkit-border-radius: 12px;
+	-moz-border-radius: 12px;
+	border-radius: 12px;
+}
+.ui-slider-horizontal .ui-slider-handle {
+top: -.3em;
+margin-left: -.6em;
+}
+
+.ui-slider .ui-slider-handle {
+position: absolute;
+z-index: 2;
+width: 0.8em;
+height: 0.8em;
+cursor: move;
+left: 100%;
+}
