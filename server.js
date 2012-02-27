@@ -3,13 +3,17 @@ var http = require('http');
 var url = require('url');
 var fs = require('fs');
 
-var indexFile = fs.readFileSync('views/index.html');
+var indexHeader = fs.readFileSync('views/indexHeader.html');
+var indexFooter = fs.readFileSync('views/indexFooter.html');
+
 
 function pushIndex(request, response) {
     response.writeHead(200, {
         'Content-type': 'text/html; charset=utf-8'
     });
-    response.end(indexFile);
+    response.write(indexHeader);
+    response.write('<h1>HELOOOOO!</h1>');
+    response.end(indexFooter);
     console.log('PUTTADE UT INDEX.HTML');
 }
 
