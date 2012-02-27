@@ -7,6 +7,7 @@ console.log('CloudBoard SERVER v 0.1.5.4 started');
 
 
 io.sockets.on('connection', function (socket) {
+  socket.timeout(0);
   socket.emit('news', { hello: 'world' });
   console.log('WE ARE IN');
     
