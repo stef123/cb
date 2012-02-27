@@ -14,7 +14,7 @@ var db = mysql.createClient({
 
 db.query('use ' + 'web82404_cb');
 
-db.query('SELECT * from tbl_cb WHERE id=\'1\'',
+db.query('SELECT * from tbl_cb',
 function(err, result, fields) {
     if (err) throw err;
     else {
