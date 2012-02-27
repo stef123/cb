@@ -18,7 +18,7 @@ db.query('SELECT * from tbl_cb WHERE id=\'1\'',
 function(err, result, fields) {
     if (err) throw err;
     else {
-        console.log(''SELECT * from tbl_cb WHERE id=\'1\'');
+        console.log('SELECT * from tbl_cb WHERE id=\'1\'');
         console.log('----------------------------------');
         for (var i in result) {
             var objekt = result[i];
