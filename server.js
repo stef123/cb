@@ -1,13 +1,37 @@
-var app = require('express').createServer()
-  , io = require('socket.io').listen(app);
   
 var http = require('http');
 var url = require('url');
 var fs = require('fs');
 
+var indexFile = fs.readFileSync('views/index.html');
+
+function pushIndex(request, response) {
+    response.writeHead(200, {
+        'Content-type': 'text/html; charset=utf-8'
+    });
+    response.end(indexFile);
+}
+
+function render404(request, response) {
+    response.writeHead(404);
+    response.end('404 File not found');
+}
+
+var app = require('express').createServer(function(request, response) {
+    var newPostFormRegex = new RegExp('^/cb/?$');
+    var pathname = url.parse(request.url).pathname;
+    if (newPostFormRegex.test(pathname)) {
+	renderNewPostForm(request, response);
+    } else {
+	render404(request, response);
+    } 
+   })
+  , io = require('socket.io').listen(app);
+
+
 app.listen(80);
 
-console.log('CloudBoard SERVER v 0.1.5.4 started');
+console.log('CloudBoard SERVER v 0.1.5.4 started on cb.no.de');
 
 
 
