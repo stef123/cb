@@ -10,6 +10,7 @@ function pushIndex(request, response) {
         'Content-type': 'text/html; charset=utf-8'
     });
     response.end(indexFile);
+    console.log('PUTTADE UT INDEX.HTML');
 }
 
 function render404(request, response) {
