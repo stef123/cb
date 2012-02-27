@@ -56,25 +56,25 @@ sio.sockets.on('connection', function (socket) {
     
     		movedata.m_top = 60;
     	}
-    	io.sockets.emit('move', movedata);
+    	sio.sockets.emit('move', movedata);
     //socket.broadcast.emit('move', movedata);
   	});
   
    	socket.on('startmove', function (movedata) {
     	console.log('TEST: ' + movedata.action);
-    	io.sockets.emit('startmove', movedata);
+    	sio.sockets.emit('startmove', movedata);
     	//socket.broadcast.emit('move', movedata);
   	});
  
  
   	socket.on('timetravel', function (traveldata) {
     	console.log('TEST: ' + traveldata.time);
-    	io.sockets.emit('timetravel', traveldata);
+    	sio.sockets.emit('timetravel', traveldata);
     	//socket.broadcast.emit('move', movedata);
   	});
   	socket.on('delete', function (deletedata) {
    		// console.log('TEST: ' + delete.time);
-   	 	io.sockets.emit('delete', deletedata);
+   	 	sio.sockets.emit('delete', deletedata);
     	//socket.broadcast.emit('move', movedata);
   	});
 
