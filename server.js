@@ -9,7 +9,7 @@ var Client = require('mysql').Client,
 	client.port = 'mysql.cloudboard.se';
 	client.user = 'web82404_cb'; 
 	client.password = 'cb123';
-	client.connect();
+	
 	client.query('USE web82404_cb');
 
 
