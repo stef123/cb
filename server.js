@@ -33,8 +33,9 @@ app.configure(function () {
         , key: 'express.sid'}));
     app.use(function (req, res) {
         res.end('<h2>Hello, your session id is ' + req.sessionID + '</h2>');
+         console.log('our session id is ' + req.sessionID);
     });
-    console.log('our session id is ' + req.sessionID);
+   
 });
 
 
