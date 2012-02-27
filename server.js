@@ -19,6 +19,9 @@ app.configure(function () {
 
 app.listen(80);
 
+ console.log('CloudBoard SERVER v 0.1.5.3 started');
+
+
 var sio = io.listen(app);
 
 
