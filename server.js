@@ -4,28 +4,32 @@ var url = require('url');
 var fs = require('fs');
 var sys = require('sys');
  
-var mysql = require('mysql');
-var db = mysql.createClient({
-    host:"mysql.cloudboard.se",
-    user:"web82404_cb",
-    password:"cb123"
-});
+var Client = require('mysql').Client,
+	client = new Client();
+	client.port = 'mysql.cloudboard.se';
+	client.user = 'web82404_cb'; 
+	client.password = 'cb123';
+	client.connect();
+	client.query('USE web82404_cb');
 
 
-db.query('use ' + 'web82404_cb');
 
-db.query('SELECT * from tbl_cb',
-function(err, result, fields) {
+client.query('SELECT * from tbl_cb', 
+
+
+function selectCb(err, results, fields) {
     if (err) throw err;
     else {
-        console.log('SELECT * from tbl_cb WHERE id=\'1\'');
+        console.log('SELECT * from tbl_cb');
         console.log('----------------------------------');
-        for (var i in result) {
-            var objekt = result[i];
+        for (var i in results) {
+            var result = results[i];
             console.log(objekt.createdOn);
         }
     }
 });
+
+
 
 var indexHeader = fs.readFileSync('views/indexHeader.html');
 var indexFooter = fs.readFileSync('views/indexFooter.html');
@@ -49,6 +53,12 @@ function render404(request, response) {
 var app = require('express').createServer(function(request, response) {
     var newPostFormRegex = new RegExp('^/cb/?$');
     var pathname = url.parse(request.url).pathname;
+    
+    
+    
+    
+    
+    
     if (newPostFormRegex.test(pathname)) {
 	pushIndex(request, response);
     } else {
