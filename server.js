@@ -11,7 +11,20 @@ var db = mysql.createClient({
     password:"cb123"
 });
 
+mysql.query('use ' + 'web82404_cb');
 
+mysql.query('SELECT * from tbl_cb WHERE id=\'1\'',
+function(err, result, fields) {
+    if (err) throw err;
+    else {
+        console.log('Frågan:');
+        console.log('----------------------------------');
+        for (var i in result) {
+            var objekt = result[i];
+            console.log(objekt.createdOn);
+        }
+    }
+});
 
 var indexHeader = fs.readFileSync('views/indexHeader.html');
 var indexFooter = fs.readFileSync('views/indexFooter.html');
