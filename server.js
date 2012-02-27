@@ -11,9 +11,10 @@ var db = mysql.createClient({
     password:"cb123"
 });
 
-mysql.query('use ' + 'web82404_cb');
 
-mysql.query('SELECT * from tbl_cb WHERE id=\'1\'',
+db.query('use ' + 'web82404_cb');
+
+db.query('SELECT * from tbl_cb WHERE id=\'1\'',
 function(err, result, fields) {
     if (err) throw err;
     else {
