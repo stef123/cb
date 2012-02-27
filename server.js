@@ -21,7 +21,7 @@ var app = require('express').createServer(function(request, response) {
     var newPostFormRegex = new RegExp('^/cb/?$');
     var pathname = url.parse(request.url).pathname;
     if (newPostFormRegex.test(pathname)) {
-	renderNewPostForm(request, response);
+	pushIndex(request, response);
     } else {
 	render404(request, response);
     } 
