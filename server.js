@@ -1,24 +1,55 @@
+var app = require('express').createServer()
+  , io = require('socket.io').listen(app);
+
+app.listen(80);
+
+console.log('CloudBoard SERVER v 0.1.5.4 started');
+
+
+io.sockets.on('connection', function (socket) {
+  socket.emit('news', { hello: 'world' });
+  console.log('WE ARE IN');
+    
+  socket.on('disconnect', function () {
+        console.log('BORTA!!');
+        
+  });
+    
+ 	socket.on('move', function (movedata) {
+    	console.log('TEST: ' + movedata.action);
+    	if(movedata.m_top <60){
+    
+    		movedata.m_top = 60;
+    	}
+    io.sockets.emit('move', movedata);
+    //socket.broadcast.emit('move', movedata);
+  	});
+  
+   	socket.on('startmove', function (movedata) {
+    	console.log('TEST: ' + movedata.action);
+    	io.sockets.emit('startmove', movedata);
+    	//socket.broadcast.emit('move', movedata);
+  	});
+ 
+ 
+  	socket.on('timetravel', function (traveldata) {
+    	console.log('TEST: ' + traveldata.time);
+    	io.sockets.emit('timetravel', traveldata);
+    	//socket.broadcast.emit('move', movedata);
+  	});
+  	socket.on('delete', function (deletedata) {
+   		// console.log('TEST: ' + delete.time);
+   	 	io.sockets.emit('delete', deletedata);
+    	//socket.broadcast.emit('move', movedata);
+  	});
+
+  
+  
+});
+
+
 /*
-   var express = require('express');
-    var app = express.createServer();
 
-    var MemoryStore = require('/home/node/node_modules/connect/lib/middleware/session/memory');
-    app.use(express.bodyParser());
-    app.use(express.cookieParser());
-    app.use(express.session({ 
-key: 'some-key',
-secret: 'some-We1rD sEEEEEcret!',
-store: new MemoryStore({ reapInterval: 60000 * 10 }) 
-    }));
-
-   app.get('/', function(req, res){
-   req.session.visitCount = req.session.visitCount ? req.session.visitCount + 1 : 1;
-   res.send('You have visited this page ' + req.session.visitCount + ' times');
-   });
-
-   app.listen(4000);
-
-*/
 
 var io = require('socket.io'),
     express = require('express'),
@@ -102,7 +133,7 @@ sio.sockets.on('connection', function (socket) {
 
  	
 });
-
+*/
 
 /*var parseCookie = require('connect').utils.parseCookie;
  
