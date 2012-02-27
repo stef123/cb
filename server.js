@@ -79,7 +79,7 @@ sio.sockets.on('connection', function (socket) {
 });
 
 
-var parseCookie = require('connect').utils.parseCookie;
+/*var parseCookie = require('connect').utils.parseCookie;
  
 var Session = require('connect').middleware.session.Session;
 sio.set('authorization', function (data, accept) {
@@ -102,4 +102,4 @@ sio.set('authorization', function (data, accept) {
     } else {
        return accept('No cookie transmitted.', false);
     }
- });
+ });*/
