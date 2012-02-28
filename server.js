@@ -25,11 +25,11 @@ mysql.query('SELECT * from tbl_cb',
 function selectCb(err, results, fields) {
     if (err) throw err;
     else {
-        console.log('SELECT * from tbl_cb');
+        console.log('SELECT * from tbl_cb_objects');
         console.log('----------------------------------');
         for (var i in results) {
             var result = results[i];
-            console.log(result.createdOn);
+            console.log(result.name);
         }
     }
 });
