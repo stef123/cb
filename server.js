@@ -85,15 +85,20 @@ var app = require('express').createServer(function(request, response) {
     
     
     
+    
     if (newPostFormRegex.test(pathname)) {
 	pushIndex(request, response);
     } else {
 	render404(request, response);
     } 
-   })
-  , io = require('socket.io').listen(app);
+   }), io = require('socket.io').listen(app);
+
+app.configure(function() {
+
+	app.use(express.static(__dirname + '/static'));
 
 
+});
 app.listen(80);
 
 console.log('CloudBoard SERVER v 0.1.5.4 started on cb.no.de');
