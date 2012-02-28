@@ -79,7 +79,7 @@ var app = express.createServer() ;
 app.configure(function() {
 
 	app.use(express.static(__dirname + '/static'));
-	app.register('.html', require('jade'));
+	
 });
 
 app.set('views', __dirname + '/views');
@@ -90,7 +90,7 @@ app.listen(80);
 
 app.get('/', function(req, res) {
 
-	res.render('indexHeader.html');
+	res.render('index.jade');
 	
 	for (var i in resultSet) {
         	
