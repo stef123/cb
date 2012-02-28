@@ -46,7 +46,7 @@ function pushIndex(request, response) {
     });
     response.write(indexHeader);
     
-     console.log(results);
+     console.log(resultSet);
     
      for (var i in resultSet) {
         	
