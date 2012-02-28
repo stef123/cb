@@ -19,7 +19,6 @@ var mysql = _mysql.createClient({
 
 
 
-
 mysql.query('SELECT * from tbl_cb', 
 
 
