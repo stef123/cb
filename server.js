@@ -3,6 +3,8 @@ var http = require('http');
 var url = require('url');
 var fs = require('fs');
 var sys = require('sys');
+var results;
+
  
 var _mysql = require('mysql');
 var mysql = _mysql.createClient({
@@ -21,7 +23,7 @@ mysql.query('USE web82404_cb');
 
 mysql.query('SELECT * from tbl_cb_objects', 
 
-var results;
+
 
 function selectCb(err, results, fields) {
     if (err) throw err;
