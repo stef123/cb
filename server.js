@@ -86,7 +86,7 @@ app.set('views', __dirname + '/views');
 io.listen(app);
 app.listen(80);
 
-app.get(´/', function(req, res) {
+app.get('/', function(req, res) {
 
 	res.render('indexHeader.html');
 	
