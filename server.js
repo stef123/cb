@@ -28,7 +28,7 @@ mysql.query('SELECT * from tbl_cb_objects',
 function selectCb(err, results, fields) {
     if (err) throw err;
     else {
-        console.log(results);
+       
        
     }
 });
@@ -47,6 +47,8 @@ function pushIndex(request, response) {
         'Content-type': 'text/html; charset=utf-8'
     });
     response.write(indexHeader);
+    
+     console.log(results);
     
      for (var i in results) {
         	
