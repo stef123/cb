@@ -4,6 +4,7 @@ var url = require('url');
 var fs = require('fs');
 var sys = require('sys');
 var express = require('express');
+var io = require('socket.io');
 var resultSet;
 
 var timeNow = new Date();
@@ -46,11 +47,9 @@ mysql.query('SELECT * from tbl_cb_objects', function
 
 
 
-var indexHeader = fs.readFileSync('views/indexHeader.html');
-var indexFooter = fs.readFileSync('views/indexFooter.html');
 
 
-function pushIndex(request, response) {
+/*function pushIndex(request, response) {
     response.writeHead(200, {
         'Content-type': 'text/html; charset=utf-8'
     });
@@ -72,35 +71,38 @@ function pushIndex(request, response) {
     console.log('PUTTADE UT INDEX.HTML');
 }
 
-function render404(request, response) {
-    response.writeHead(404);
-    response.end('404 File not found');
-}
+*/
 
-var app = express.createServer(function(request, response) {
-    var newPostFormRegex = new RegExp('^/cb/?$');
-    var pathname = url.parse(request.url).pathname;
-    
-    
-    
-    
-    
-    
-    
-    if (newPostFormRegex.test(pathname)) {
-	pushIndex(request, response);
-    } else {
-	render404(request, response);
-    } 
-   }), io = require('socket.io').listen(app);
+var app = express.createServer() ;
 
 app.configure(function() {
 
 	app.use(express.static(__dirname + '/static'));
 
-
 });
+
+app.set('views', __dirname + '/views');
+
+io.listen(app);
 app.listen(80);
+
+app.get(´/', function(req, res) {
+
+	res.render('indexHeader.html');
+	
+	for (var i in resultSet) {
+        	
+        	
+           var result = resultSet[i];
+           response.write('<h1>' + result.name + '</h1><br/>');
+
+        }    
+
+	res.render('indexFooter.html');
+	console.log('PUTTADE UT INDEX.HTML');
+
+	
+});
 
 console.log('CloudBoard SERVER v 0.1.5.4 started on cb.no.de');
 
