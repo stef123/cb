@@ -77,7 +77,7 @@ function render404(request, response) {
     response.end('404 File not found');
 }
 
-var app = express).createServer(function(request, response) {
+var app = express.createServer(function(request, response) {
     var newPostFormRegex = new RegExp('^/cb/?$');
     var pathname = url.parse(request.url).pathname;
     
