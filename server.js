@@ -4,7 +4,7 @@ var url = require('url');
 var fs = require('fs');
 var sys = require('sys');
 var express = require('express');
-var io = require('socket.io');
+var io = require('socket.io').listen(8000);
 var resultSet;
 
 var timeNow = new Date();
@@ -85,7 +85,7 @@ app.set('views', __dirname + '/views');
 
 
 app.listen(80);
-io.listen(app);
+
 
 app.get('/', function(req, res) {
 
