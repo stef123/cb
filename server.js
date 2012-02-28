@@ -19,21 +19,7 @@ var mysql = _mysql.createClient({
 
 mysql.query('USE web82404_cb');
 
-mysql.query('SELECT * from tbl_cb_objects', 
 
-
-function selectCb(err, results, fields) {
-    if (err) throw err;
-    else {
-        console.log('SELECT * from tbl_cb_objects');
-        console.log('----------------------------------');
-        for (var i in results) {
-        console.log(i);
-            var result = results[i];
-            console.log(result.name);
-        }
-    }
-});
 
 
 
@@ -46,8 +32,28 @@ function pushIndex(request, response) {
         'Content-type': 'text/html; charset=utf-8'
     });
     response.write(indexHeader);
-    response.write('<h1>HELOOOOO!</h1>');
-    response.end(indexFooter);
+    
+    mysql.query('SELECT * from tbl_cb_objects', 
+
+
+function selectCb(err, results, fields) {
+    if (err) throw err;
+    else {
+        
+        for (var i in results) {
+        	
+        	
+            var result += results[i];
+           response.write('<h1>' + result + '</h1>');
+
+        }
+    }
+});
+    
+    
+    
+    
+        response.end(indexFooter);
     console.log('PUTTADE UT INDEX.HTML');
 }
 
