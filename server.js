@@ -28,6 +28,7 @@ function selectCb(err, results, fields) {
         console.log('SELECT * from tbl_cb_objects');
         console.log('----------------------------------');
         for (var i in results) {
+        console.log(i);
             var result = results[i];
             console.log(result.name);
         }
