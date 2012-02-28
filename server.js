@@ -43,8 +43,8 @@ function selectCb(err, results, fields) {
         for (var i in results) {
         	
         	
-            var result += results[i];
-           response.write('<h1>' + result + '</h1>');
+            var result = results[i];
+           response.write('<h1>' + result + '</h1><br/>');
 
         }
     }
