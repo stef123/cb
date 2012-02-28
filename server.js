@@ -19,7 +19,7 @@ var mysql = _mysql.createClient({
 
 
 
-mysql.query('SELECT * from tbl_cb', 
+mysql.query('SELECT * from tbl_cb;', 
 
 
 function selectCb(err, results, fields) {
