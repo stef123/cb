@@ -4,17 +4,24 @@ var url = require('url');
 var fs = require('fs');
 var sys = require('sys');
  
-var Client = require('mysql').Client,
+var _mysql = require('mysql');
+var mysql = _mysql.createClient({
+	user: 'web82404_cb',
+	password: 'cb123',
+	port: 'mysql.cloudboard.se'
+
+
+)
 	client = new Client();
 	client.port = 'mysql.cloudboard.se';
 	client.user = 'web82404_cb'; 
 	client.password = 'cb123';
 	
-	client.query('USE web82404_cb');
+	mysql.query('USE web82404_cb');
 
 
 
-client.query('SELECT * from tbl_cb', 
+mysql.query('SELECT * from tbl_cb', 
 
 
 function selectCb(err, results, fields) {
@@ -24,7 +31,7 @@ function selectCb(err, results, fields) {
         console.log('----------------------------------');
         for (var i in results) {
             var result = results[i];
-            console.log(objekt.createdOn);
+            console.log(result.createdOn);
         }
     }
 });
