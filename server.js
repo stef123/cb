@@ -20,7 +20,6 @@ var mysql = _mysql.createClient({
 mysql.query('USE web82404_cb');
 
 
-var results = mysql.query('SELECT * from tbl_cb_objects');
     
 
 
@@ -35,10 +34,13 @@ function pushIndex(request, response) {
     });
     response.write(indexHeader);
     
+    var results = mysql.query('SELECT * from tbl_cb_objects');
+
+    
     for (var i in results) {
     
     	var result = results[i];
-        response.write(result.name);
+        response.write(result);
     
     
     
