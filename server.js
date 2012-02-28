@@ -9,12 +9,13 @@ var mysql = _mysql.createClient({
 	user: 'web82404_cb',
 	password: 'cb123',
 	port: 'mysql.cloudboard.se',
+	database: 'web82404_cb'
 
 
 });
 		
 	console.log(mysql);
-	mysql.query('USE web82404_cb');
+
 
 
 
