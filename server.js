@@ -13,6 +13,7 @@ var mysql = _mysql.createClient({
 
 });
 		
+	
 	mysql.query('USE web82404_cb');
 
 
