@@ -31,7 +31,7 @@ function selectCb(err, results, fields) {
         	
         	
             var result = results[i];
-           console.log('<h1>' + result + '</h1><br/>');
+           console.log('<h1>' + result.name + '</h1><br/>');
 
         }
     }
