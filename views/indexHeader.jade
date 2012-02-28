@@ -1,0 +1,218 @@
+!!! 5
+head
+    meta(http-equiv='Content-Type', content='text/html;charset=utf-8')
+    title
+    link(rel='shortcut icon', href='favicon.ico', type='image/x-icon')
+    link(rel='stylesheet', type='text/css', href='/css/reset.css')
+    link(rel='stylesheet', type='text/css', href='js/jquery-ui/css/smoothness/jquery-ui-1.8.9.custom.css')
+    link(rel='stylesheet', type='text/css', href='/css/cloudboard.css')
+    link(rel='stylesheet', href='js/jQuery-File-Upload/jquery.fileupload-ui.css')
+    //
+      <script type="text/javascript" src="js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js"></script>
+    //
+      <script type="text/javascript" src="js/jquery.ui.touch.js"></script>
+    //
+       UPLOAD 
+    script(src='//ajax.googleapis.com/ajax/libs/jquery/1.6.3/jquery.min.js')
+    script(src='//ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js')
+    //
+      <script src="//ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+      <script src="js/jQuery-File-Upload/jquery.iframe-transport.js"></script>
+      <script src="js/jQuery-File-Upload/jquery.fileupload.js"></script>
+      <script src="js/jQuery-File-Upload/jquery.fileupload-ui.js"></script>
+      <script src="js/application.js"></script>
+    script(src='js/dnd-file-upload/jquery.dnd-file-upload.js')
+    script(src='js/dnd-file-upload/jquery.client.js')
+    //
+      END UPLOADS 
+    script(src='http://cb.no.de:80/socket.io/socket.io.js')
+    script(type='text/javascript', src='js/jquery.rightClick.js')
+    script(type='text/javascript', src='js/ajaxCall.js')
+    script(type='text/javascript')
+      $(document).ready(function(){
+      var timeNow = new Date();
+      var yearNow = timeNow.getFullYear();
+      var monthNow = timeNow.getMonth() + 1;
+      var dayNow = timeNow.getDate();
+      /*Setup the socket thingy */
+      socket = io.connect('http://cb.no.de:8000');
+      socket.on('connect', function(){
+      });
+      //When recieving a finished move signal - move all other clients object to that position.
+      socket.on('move', function (data) {
+      var idt = data.m_id;
+      var leftt = data.m_left;
+      var topt = data.m_top;
+      $("#" + idt).attr("style", "top: " + topt + "px; left: " + leftt + "px;")
+      });
+      //When a move is initiated by another client - shoulfd lock the other cleints version of the object
+      socket.on('startmove', function (data) {
+      //alert(data.action);
+      var idt = data.m_id;
+      var leftt = data.m_left;
+      var topt = data.m_top;
+      $("#" + idt).attr("style", "top: " + topt + "px; left: " + leftt + "px; border: 4px dashed #900;")
+      });
+      //When a client starts a time travel, display a popup (just for debugging)
+      socket.on('timetravel', function (data) {
+      //alert(data.action);
+      var timetravel = data.time;
+      alert("A user moved to " + timetravel)
+      });
+      //When someone deletes something in the CloudBoard, re-populate every client
+      socket.on('delete', function (data) {
+      //alert(data.action);
+      populate('<?php echo getDagensdatum(); ?>');
+      });
+      //File upload thingy
+      $("#dynamic").dropzone(
+      {
+      url : "upload.php"
+      }
+      );
+      var minDatum = '<?php echo creationDate(); ?>';
+      var minDate = new Date(minDatum.substring(0,4), ((minDatum.substring(5,7))-1), minDatum.substring(8,10));
+      var maxDate = new Date(<?php echo getDagensAr() . ', ' . (getDagensManad() - 1). ', ' . getDagensDag(); ?>);
+      var maxMonth = ((maxDate.getMonth())+1).toString();
+      var maxDay = maxDate.getDate().toString();
+      if (maxDay.length == 1) {
+      maxDay = "0" + maxDay;
+      }
+      if (maxMonth.length == 1) {
+      maxMonth = "0" + maxMonth;
+      }
+      var maxDateW3C = maxDate.getFullYear() + "-" +  maxMonth + "-" + maxDay;
+      var actualTime;
+      var maxValue = Math.floor(((maxDate.getTime() - minDate.getTime()) / 86400000) +1);
+      $('#slider').slider({
+      max: maxValue,
+      value: maxValue,
+      slide: function(event, ui) {
+      var date = new Date(minDate.getTime());
+      date.setDate(date.getDate() + ui.value);
+      if ($.datepicker.formatDate($.datepicker.W3C, date) == maxDateW3C) {
+      $('#datum').replaceWith('<div id="datum">LIVE!</div>');
+      }
+      else {
+      $('#datum').replaceWith('<div id="datum">' + $.datepicker.formatDate($.datepicker.W3C, date) + '</div>');
+      }
+      actualTime =  $.datepicker.formatDate( $.datepicker.W3C, date);
+      },
+      stop: function(event, ui) {
+      var movedata = {
+      time: actualTime
+      }
+      //alert(movedata.action);
+      socket.emit('timetravel', movedata);
+      populate(actualTime);
+      }
+      }); //END SLIDER
+      populate('<?php echo getDagensdatum(); ?>');
+      });
+      function populate(actualTime) {
+      //Code to reload content in div "dynamic"
+      $("#dynamic").load('the_loop.php', {actTime: actualTime}, function() {
+      $( '.resizable' ).resizable();
+      $( '.draggable' ).draggable({
+      start: function(e, ui) {
+      var myid=$(this).attr('id');
+      var myleft=ui.position.left;
+      var mytop=ui.position.top;
+      $(this).addClass("ontop");
+      var movedata = {
+      action: 'startmove',
+      m_id: myid,
+      m_left: myleft,
+      m_top: mytop
+      }
+      //alert(movedata.action);
+      socket.emit('startmove', movedata);
+      },
+      stop: function(e, ui) {
+      var myid=$(this).attr('id');
+      var myleft=ui.position.left;
+      var mytop=ui.position.top;
+      $(this).removeClass("ontop");
+      var movedata = {
+      action: 'move',
+      m_id: myid,
+      m_left: myleft,
+      m_top: mytop
+      }
+      //alert(movedata.action);
+      socket.emit('move', movedata);
+      $.get('updateObject.php', {
+      theID: myid,
+      theLeft: myleft,
+      theTop: mytop
+      }, function() {
+      //alert("Objektet raderades");
+      //$( "#dialogDelete" ).dialog({ modal: true });
+      //$( "#dialogGenerell" ).dialog({ modal: true });
+      //$( ".ui-dialog" ).resizable({ disabled: true });
+      });
+      //socket.emit('message', message);
+      /*socket.send('move', {
+      myid: $(this).attr('id'),
+      myleft: ui.position.left,
+      mytop: ui.position.top
+      });*/
+      //alert("id: " + $(this).attr('id') + "position:" + ui.position.left + "," + ui.position.top);
+      }
+      });
+      $( '.droppable' ).droppable({
+      drop: function( event, ui ) {
+      $( this )
+      .addClass( "ui-state-highlight" )
+      .find( "p" )
+      .html( "Dropped!" );
+      }
+      });
+      $('.kryss').click(function(e) {
+      var currentId = $(this).attr('id').substr(6);
+      socket.emit('delete', currentId);
+      //alert(currentId);
+      $.get('deleteObject.php', {theID: currentId}, function() {
+      //alert("Objektet raderades");
+      populate('<?php echo getDagensdatum(); ?>');
+      //$( "#dialogDelete" ).dialog({ modal: true });
+      //$( "#dialogGenerell" ).dialog({ modal: true });
+      //$( ".ui-dialog" ).resizable({ disabled: true });
+      });
+      });
+      });
+      }
+      $.fn.dropzone.newFilesDropped = function() {
+      };
+      $.fn.dropzone.uploadStarted = function(fileIndex, file) {
+      // upload of file with given index has started
+      alert("A user uploads a file called \\"" + file.fileName + "\”");
+      populate('<?php echo getDagensdatum(); ?>');
+      };
+      $.fn.dropzone.uploadFinished = function(fileIndex, file, time) {
+      // upload of file with given index has finished; upload took *time* mili seconds
+      };
+      $.fn.dropzone.fileUploadProgressUpdated = function(fileIndex, file, newProgress) {
+      // progress of given file has changed to *newProgress* percent
+      };
+      $.fn.dropzone.fileUploadSpeedUpdated = function(fileIndex, file, KBperSecond) {
+      // upload speed of given file has changed to *KBPerSecond* KB/s
+      };
+  body
+    //
+       <?php //include("facebook_login.php"); ?>
+    .header
+      .logo
+        p
+          | The CloudBoard
+          small alpha 0.5.4.1
+      .timeslider
+        #slider
+      #datum LIVE!
+      #login
+      //
+        END LOGIN
+    //
+       END HEADER 
+    #dynamic.fileupload
+      canvas.WB_canvas

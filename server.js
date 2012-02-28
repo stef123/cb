@@ -90,7 +90,7 @@ app.listen(80);
 
 app.get('/', function(req, res) {
 
-	res.render('index.jade');
+	res.render('indexHeader.jade');
 	
 	for (var i in resultSet) {
         	
