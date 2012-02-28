@@ -5,6 +5,7 @@ var fs = require('fs');
 var sys = require('sys');
 var express = require('express');
 var io = require('socket.io').listen(8000);
+
 var resultSet;
 
 var timeNow = new Date();
@@ -78,7 +79,7 @@ var app = express.createServer() ;
 app.configure(function() {
 
 	app.use(express.static(__dirname + '/static'));
-
+	app.register('.html', require('jade'));
 });
 
 app.set('views', __dirname + '/views');
