@@ -83,8 +83,9 @@ app.configure(function() {
 
 app.set('views', __dirname + '/views');
 
-io.listen(app);
+
 app.listen(80);
+io.listen(app);
 
 app.get('/', function(req, res) {
 
