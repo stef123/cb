@@ -17,9 +17,9 @@ var mysql = _mysql.createClient({
 	console.log(mysql);
 
 
+mysql.query('USE web82404_cb');
 
-
-mysql.query('SELECT * from tbl_cb;', 
+mysql.query('SELECT * from tbl_cb', 
 
 
 function selectCb(err, results, fields) {
