@@ -8,7 +8,7 @@ var _mysql = require('mysql');
 var mysql = _mysql.createClient({
 	user: 'web82404_cb',
 	password: 'cb123',
-	port: 'mysql.cloudboard.se',
+	host: 'mysql.cloudboard.se',
 	database: 'web82404_cb'
 
 
