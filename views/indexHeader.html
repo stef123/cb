@@ -30,7 +30,7 @@
 <script src="js/dnd-file-upload/jquery.client.js" ></script>
 
 <!--END UPLOADS -->
-<!--<script src="js/socket.io.js"></script>-->
+
 <script src="http://cb.no.de:80/socket.io/socket.io.js"></script>
 
 
@@ -51,7 +51,10 @@
 	
 	$(document).ready(function(){
 
-		
+		var timeNow = new Date();
+		var yearNow = timeNow.getFullYear();
+		var monthNow = timeNow.getMonth() + 1;
+		var dayNow = timeNow.getDate();
 		
 		/*Setup the socket thingy */
 		

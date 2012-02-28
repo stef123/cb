@@ -5,6 +5,15 @@ var fs = require('fs');
 var sys = require('sys');
 var resultSet;
 
+var timeNow = new Date();
+var yearNow = timeNow.getFullYear();
+var monthNow = timeNow.getMonth() + 1;
+var dayNow = timeNow.getDate();
+
+
+
+
+
  
 var _mysql = require('mysql');
 var mysql = _mysql.createClient({
