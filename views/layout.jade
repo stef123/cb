@@ -33,7 +33,7 @@ head
       var yearNow = timeNow.getFullYear();
       var monthNow = timeNow.getMonth() + 1;
       var dayNow = timeNow.getDate();
-      alert (timeNow);
+      alert(timeNow);
       /*Setup the socket thingy */
       socket = io.connect('http://cb.no.de:8000');
       socket.on('connect', function(){
