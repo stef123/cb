@@ -8,12 +8,12 @@ var _mysql = require('mysql');
 var mysql = _mysql.createClient({
 	user: 'web82404_cb',
 	password: 'cb123',
-	port: 'mysql.cloudboard.se'
+	port: 'mysql.cloudboard.se',
 
 
 });
 		
-	
+	console.log(mysql);
 	mysql.query('USE web82404_cb');
 
 
