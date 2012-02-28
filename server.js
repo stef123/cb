@@ -3,7 +3,7 @@ var http = require('http');
 var url = require('url');
 var fs = require('fs');
 var sys = require('sys');
-var results;
+var resultSet;
 
  
 var _mysql = require('mysql');
@@ -16,21 +16,19 @@ var mysql = _mysql.createClient({
 
 });
 		
-	console.log(mysql);
+	//console.log(mysql);
 
 
 mysql.query('USE web82404_cb');
 
-mysql.query('SELECT * from tbl_cb_objects', 
+mysql.query('SELECT * from tbl_cb_objects', function 
 
-
-
-function selectCb(err, results, fields) {
-    if (err) throw err;
-    else {
+	selectCb(err, results, fields) {
+	    if (err) throw err;
+  	 	else {
        
-       
-    }
+       	resultSet = results;
+  	  }
 });
 
 
@@ -50,10 +48,10 @@ function pushIndex(request, response) {
     
      console.log(results);
     
-     for (var i in results) {
+     for (var i in resultSet) {
         	
         	
-           var result = results[i];
+           var result = resultSet[i];
            response.write('<h1>' + result.name + '</h1><br/>');
 
         }    
