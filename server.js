@@ -42,7 +42,7 @@ function selectCb(err, results, fields) {
         
         for (var i in results) {
         	
-        	
+        	response.write('<p>yes</p>');
             var result = results[i];
            response.write('<h1>' + result + '</h1><br/>');
 
