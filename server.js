@@ -96,7 +96,7 @@ app.get('/', function(req, res) {
         	
         	
            var result = resultSet[i];
-           res.write('<h1>' + result.name + '</h1><br/>');
+           res.render('<h1>' + result.name + '</h1><br/>');
 
         }    
 
