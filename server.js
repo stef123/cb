@@ -100,7 +100,7 @@ app.get('/', function(req, res) {
 
         }    
 
-	res.render('indexFooter.html');
+	//res.render('indexFooter.html');
 	console.log('PUTTADE UT INDEX.HTML');
 
 	
