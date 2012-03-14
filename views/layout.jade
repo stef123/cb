@@ -38,6 +38,9 @@ head
       /*Setup the socket thingy */
       socket = io.connect('http://cb.no.de:8000');
       socket.on('connect', function(){
+      
+      
+      
       });
       //When recieving a finished move signal - move all other clients object to that position.
       socket.on('move', function (data) {
@@ -63,7 +66,7 @@ head
       //When someone deletes something in the CloudBoard, re-populate every client
       socket.on('delete', function (data) {
       //alert(data.action);
-      populate('<?php echo getDagensdatum(); ?>');
+     // populate('<?php echo getDagensdatum(); ?>');
       });
       //File upload thingy
       $("#dynamic").dropzone(
