@@ -33,7 +33,8 @@ head
       var yearNow = timeNow.getFullYear();
       var monthNow = timeNow.getMonth() + 1;
       var dayNow = timeNow.getDate();
-      alert(timeNow);
+      var
+      alert(yearNow + "-" + monthNow + "-" + dayNow);
      
       /*Setup the socket thingy */
       socket = io.connect('http://cb.no.de:8000');
@@ -66,7 +67,7 @@ head
       //When someone deletes something in the CloudBoard, re-populate every client
       socket.on('delete', function (data) {
       //alert(data.action);
-     // populate('<?php echo getDagensdatum(); ?>');
+      //populate-phpkod
       });
       //File upload thingy
       $("#dynamic").dropzone(
@@ -74,9 +75,9 @@ head
       url : "upload.php"
       }
       );
-      var minDatum = '<?php echo creationDate(); ?>';
-      var minDate = new Date(minDatum.substring(0,4), ((minDatum.substring(5,7))-1), minDatum.substring(8,10));
-      var maxDate = new Date(<?php echo getDagensAr() . ', ' . (getDagensManad() - 1). ', ' . getDagensDag(); ?>);
+      //var minDatum = 'php echo creationDate(); ';
+      //var minDate = new Date(minDatum.substring(0,4), ((minDatum.substring(5,7))-1), minDatum.substring(8,10));
+      //var maxDate = new Date(php echo getDagensAr() . ', ' . (getDagensManad() - 1). ', ' . getDagensDag(); );
       var maxMonth = ((maxDate.getMonth())+1).toString();
       var maxDay = maxDate.getDate().toString();
       if (maxDay.length == 1) {
@@ -111,7 +112,7 @@ head
       populate(actualTime);
       }
       }); //END SLIDER
-      populate('<?php echo getDagensdatum(); ?>');
+      //populate-phpkod
       });
       function populate(actualTime) {
       //Code to reload content in div "dynamic"
@@ -178,8 +179,8 @@ head
       //alert(currentId);
       $.get('deleteObject.php', {theID: currentId}, function() {
       //alert("Objektet raderades");
-      populate('<?php echo getDagensdatum(); ?>');
-      //$( "#dialogDelete" ).dialog({ modal: true });
+       //populate-phpkod
+             //$( "#dialogDelete" ).dialog({ modal: true });
       //$( "#dialogGenerell" ).dialog({ modal: true });
       //$( ".ui-dialog" ).resizable({ disabled: true });
       });
@@ -191,7 +192,7 @@ head
       $.fn.dropzone.uploadStarted = function(fileIndex, file) {
       // upload of file with given index has started
       alert("A user uploads a file called \\"" + file.fileName + "\”");
-      populate('<?php echo getDagensdatum(); ?>');
+       //populate-phpkod
       };
       $.fn.dropzone.uploadFinished = function(fileIndex, file, time) {
       // upload of file with given index has finished; upload took *time* mili seconds
@@ -204,7 +205,7 @@ head
       };
   body
     //
-       <?php //include("facebook_login.php"); ?>
+     
     .header
       .logo
         p
@@ -218,5 +219,5 @@ head
         END LOGIN
     //
        END HEADER 
-    #dynamic.fileupload
+    #dynamic!=body
       canvas.WB_canvas

@@ -91,15 +91,17 @@ app.listen(80);
 
 app.get('/', function(req, res) {
 
-	res.render('layout.jade');
 	
-	for (var i in resultSet) {
-        	
+		res.render('index.jade',{locals: {resultSet: resultSet}});
+	
+
+	
+        	/*
         	
            var result = resultSet[i];
            res.render('<h1>' + result.name + '</h1><br/>');
 
-        }    
+        }  */  
 
 	//res.render('indexFooter.html');
 	console.log('PUTTADE UT INDEX.HTML');

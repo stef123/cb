@@ -13,6 +13,9 @@ color: #999;
 }
 
 
+/* The rest */
+
+
 .file-drop, file-drop-hover{
 
 height:80px;
@@ -20,7 +23,6 @@ width: 100px;
 
 }
 
-/* The rest */
 
 body {
 	
