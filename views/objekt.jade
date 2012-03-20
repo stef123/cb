@@ -1,3 +1,3 @@
 - if (objekt.type == '3')
- .imagebox.draggable.resizable#{objekt.id}
-    img(src='#{objekt.content}')
+	div.imagebox.draggable.resizable(id='#{objekt.id}', style='top:#{objekt.coord_x}px; left:#{objekt.coord_y}px;')
+	img(src='#{objekt.content}', alt='#{objekt.namn}', width='#{objekt.width}')

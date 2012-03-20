@@ -99,6 +99,13 @@ z-index: 1000;
 
 
 }
+#objekt {
+
+position: absolute;
+width: 100%;
+height: 100%;
+
+}
  
  /* preformatted WB - will be altered dynamically by php with inline styles, like width and height. */
 .WB {

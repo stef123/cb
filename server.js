@@ -1,81 +1,52 @@
-  
 var http = require('http');
 var url = require('url');
 var fs = require('fs');
 var sys = require('sys');
 var express = require('express');
+var expose = require('express-expose');
 var io = require('socket.io').listen(8000);
-
 
 var resultSet;
 
+var creationDate;
 var timeNow = new Date();
 var yearNow = timeNow.getFullYear();
 var monthNow = timeNow.getMonth() + 1;
 var dayNow = timeNow.getDate();
+var hourNow = timeNow.getHours() +1;
+var minuteNow = timeNow.getMinutes();
+var secondNow = timeNow.getSeconds();
+var formattedDatetime = yearNow + "-" + monthNow + "-" + dayNow + " " + hourNow + ":" + minuteNow + ":" + secondNow;
 
-
-
-
-
- 
 var _mysql = require('mysql');
 var mysql = _mysql.createClient({
 	user: 'web82404_cb',
 	password: 'cb123',
 	host: 'mysql.cloudboard.se',
 	database: 'web82404_cb'
-
-
 });
-		
-	//console.log(mysql);
-
 
 mysql.query('USE web82404_cb');
+	mysql.query('SELECT * from tbl_cb WHERE id=\'1\'', function 
 
-mysql.query('SELECT * from tbl_cb_objects', function 
+		selectCb(err, results, fields) {
+	  	
+  			if (err) {
+  				console.log("ERROR CONNECTING TO DATABASE");
+  				throw err;
+  				}
+  	 		else {
+  	 			//console.log(fields);
+  	 			  	 				
+  	 			creationDate=results[0].createdOn;
 
-	selectCb(err, results, fields) {
-	    if (err) throw err;
-  	 	else {
-       
-       	resultSet = results;
-  	  }
-});
-
-
-    
+  	 			//resultSet = results;
+  	 		}
+	});
 
 
 
-
-
-/*function pushIndex(request, response) {
-    response.writeHead(200, {
-        'Content-type': 'text/html; charset=utf-8'
-    });
-    response.write(indexHeader);
-    
-     console.log(resultSet);
-    
-     for (var i in resultSet) {
-        	
-        	
-           var result = resultSet[i];
-           response.write('<h1>' + result.name + '</h1><br/>');
-
-        }    
-        
-    
-    
-     response.end(indexFooter);
-    console.log('PUTTADE UT INDEX.HTML');
-}
-
-*/
-
-var app = express.createServer() ;
+var app = express.createServer();
 
 app.configure(function() {
 
@@ -86,37 +57,52 @@ app.configure(function() {
 app.set('views', __dirname + '/views');
 
 
-app.listen(80);
 
+app.listen(80);
 
 app.get('/', function(req, res) {
 
 	
-		res.render('index.jade',{locals: {resultSet: resultSet}});
-	
+	mysql.query('USE web82404_cb');
+	mysql.query('SELECT * from tbl_cb_objects', function 
 
-	
-        	/*
-        	
-           var result = resultSet[i];
-           res.render('<h1>' + result.name + '</h1><br/>');
+		selectCb(err, results, fields) {
+	  	
+  			if (err) {
+  				console.log("ERROR CONNECTING TO DATABASE");
+  				throw err;
+  				}
+  	 		else {
+  	 			//console.log(fields);
+  	 			res.render('index.jade', {
+  	 				locals: {
+  	 					results: results,
+  	 					creationDate: creationDate,
+  	 					formattedDatetime: formattedDatetime
+  	 					
+  	 				}
+  	 			});
 
-        }  */  
+  	 			//resultSet = results;
+  	 		}
+	});
 
-	//res.render('indexFooter.html');
-	console.log('PUTTADE UT INDEX.HTML');
+//console.log(resultSet);
+		
+	//	res.render('index.jade',{locals: {resultSet: resultSet}});
+
+	    console.log('PUTTADE UT INDEX.HTML');
 
 	
 });
 
-console.log('CloudBoard SERVER v 0.1.5.4 started on cb.no.de');
+console.log('CloudBoard SERVER v 0.2.1 started on cb.no.de');
 
 
 
 io.sockets.on('connection', function (socket) {
   
-  socket.emit('news', { hello: 'world' });
-  console.log('WE ARE IN');
+   console.log('WE ARE IN');
     
   socket.on('disconnect', function () {
         console.log('BORTA!!');
