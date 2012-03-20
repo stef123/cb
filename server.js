@@ -5,18 +5,42 @@ var sys = require('sys');
 var express = require('express');
 var expose = require('express-expose');
 var io = require('socket.io').listen(8000);
-
+var formattedDatetime;
 var resultSet;
 
 var creationDate;
-var timeNow = new Date();
-var yearNow = timeNow.getFullYear();
-var monthNow = timeNow.getMonth() + 1;
-var dayNow = timeNow.getDate();
-var hourNow = timeNow.getHours() +1;
-var minuteNow = timeNow.getMinutes();
-var secondNow = timeNow.getSeconds();
-var formattedDatetime = yearNow + "-" + monthNow + "-" + dayNow + " " + hourNow + ":" + minuteNow + ":" + secondNow;
+
+function getDate() {
+
+	var timeNow = new Date();
+	var yearNow = timeNow.getFullYear();
+	var monthNow = timeNow.getMonth() + 1;
+	monthNow = "0" + monthNow;
+
+	if(monthNow.length <= 1){
+					
+
+	}
+	var dayNow = timeNow.getDate();
+
+
+	if(dayNow.length==1){
+
+		dayNow= "0" + dayNow;
+
+	}
+	var hourNow = timeNow.getHours() +1;
+	var minuteNow = timeNow.getMinutes();
+	var secondNow = timeNow.getSeconds();
+	formattedDatetime = yearNow + "-" + monthNow + "-" + dayNow + " " + hourNow + ":" + minuteNow + ":" + secondNow;
+	
+	return String(formattedDatetime);
+}
+
+
+
+formattedDatetime=getDate();
+
 
 var _mysql = require('mysql');
 var mysql = _mysql.createClient({
@@ -36,6 +60,7 @@ mysql.query('USE web82404_cb');
   				throw err;
   				}
   	 		else {
+  	 		
   	 			//console.log(fields);
   	 			  	 				
   	 			creationDate=results[0].createdOn;
@@ -58,13 +83,17 @@ app.set('views', __dirname + '/views');
 
 
 
+
+
+
+
 app.listen(80);
 
 app.get('/', function(req, res) {
 
 	
 	mysql.query('USE web82404_cb');
-	mysql.query('SELECT * from tbl_cb_objects', function 
+	mysql.query('SELECT * from tbl_cb_objects WHERE creationDatetime <= \'' + formattedDatetime + '\' AND deletionDatetime > \'' + formattedDatetime + '\'', function 
 
 		selectCb(err, results, fields) {
 	  	
@@ -81,6 +110,7 @@ app.get('/', function(req, res) {
   	 					formattedDatetime: formattedDatetime
   	 					
   	 				}
+  	 				
   	 			});
 
   	 			//resultSet = results;
@@ -119,12 +149,29 @@ io.sockets.on('connection', function (socket) {
     //socket.broadcast.emit('move', movedata);
   	});
   
+  
    	socket.on('startmove', function (movedata) {
     	console.log('TEST: ' + movedata.action);
     	io.sockets.emit('startmove', movedata);
     	//socket.broadcast.emit('move', movedata);
   	});
  
+ 	socket.on('stop', function (movedata) {
+    	console.log('TEST: ' + movedata.action);
+    	if(movedata.m_top <60){
+    		movedata.m_top = 60;
+    	}
+    	mysql.query('UPDATE tbl_cb_objects SET coord_y=' + movedata.m_left + ', coord_x=' + movedata.m_top + ', updateDatetime=\'' + getDate() + '\' WHERE id=' + movedata.m_id + '', function
+    	
+    	selectCb(err, results, fields) {
+    		if (err) throw err;	
+		});
+    	
+    	
+    	
+    io.sockets.emit('move', movedata);
+    //socket.broadcast.emit('move', movedata);
+  	});
  
   	socket.on('timetravel', function (traveldata) {
     	console.log('TEST: ' + traveldata.time);

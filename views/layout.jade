@@ -31,9 +31,10 @@ head
 	
 			//alert(yearNow + "-" + monthNow + "-" + dayNow);
 	
-			socket = io.connect('localhost:8000');
+			socket = io.connect('http://localhost:8000');
 			socket.on('connect', function(){
 				alert("tjohoo");
+				populate(actualTime);
 			});
 
 		
@@ -65,7 +66,7 @@ head
 			//When someone deletes something in the CloudBoard, re-populate every client
 			socket.on('delete', function (data) {
 				//alert(data.action);
-				//populate-phpkod
+				populate(actualTime);
 			});
 
 			
@@ -112,9 +113,10 @@ head
 					}
 					//alert(movedata.action);
 					socket.emit('timetravel',movedata);
-					//populate(actualTime);
+					populate(actualTime);
 				}
-			});   //END SLIDER
+			});   //DONE WITH THE TIMESLIDER!
+			
 
 		});
 		function populate(actualTime) {
@@ -136,6 +138,25 @@ head
 					
 					socket.emit('startmove', movedata);
 				},
+				
+				drag:function(e, ui){
+					var myid=$(this).attr('id');
+	
+					var myleft=ui.position.left;
+					var mytop=ui.position.top;
+					$(this).addClass("ontop");
+					var movedata = {
+						action: 'move',
+						m_id: myid,
+						m_left: myleft,
+						m_top: mytop
+					}
+					
+					socket.emit('move', movedata);
+				},
+				
+				
+				
 				stop: function(e, ui) {
 					var myid=$(this).attr('id');
 					var myleft=ui.position.left;
@@ -148,7 +169,7 @@ head
 						m_top: mytop
 					}
 				
-					socket.emit('move', movedata);
+					socket.emit('stop', movedata);
 		
 					//alert("id: " + $(this).attr('id') + "position:" + ui.position.left + "," + ui.position.top);
 				}
@@ -173,11 +194,11 @@ head
 body
 	.header
 		.logo The CloudBoard
-			small alpha 0.5.4.1
+			small alpha 0.6.3
 		.timeslider
 			#slider
 			#datum LIVE!
 		#login
 	
 	#dynamic!=body
-	canvas.WB_canvas
+	
