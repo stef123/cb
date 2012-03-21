@@ -16,7 +16,7 @@
 		img(src='#{objekt.content}', alt='#{objekt.namn}', width='100%', height='100%')
 		
 - if (objekt.type == '16')
-	div.m4vbox.draggable.resizable(id='#{objekt.id}', style='top:#{objekt.coord_x}px; left:#{objekt.coord_y}px;')
+	div.m4vbox.draggable(id='#{objekt.id}', style='top:#{objekt.coord_x}px; left:#{objekt.coord_y}px;')
 		video(width='400', height='225', controls='controls')
 			source(src='#{objekt.content}', type='video/mp4')
 			
