@@ -2,7 +2,7 @@
 head
 	meta(http-equiv='Content-Type', content='text/html;charset=utf-8')
 
-	title
+	title('TESTAT titel')
 	
 	
 	link(rel='shortcut icon', href='favicon.ico', type='image/x-icon')
@@ -16,6 +16,8 @@ head
 	
 	script(src='js/dnd-file-upload/jquery.dnd-file-upload.js')
 	script(src='js/dnd-file-upload/jquery.client.js')
+
+	script(src='js/jQueryRotateCompressed.2.2.js')
 
 	script(src='http://localhost:8000/socket.io/socket.io.js')
 
@@ -33,7 +35,7 @@ head
 	
 			socket = io.connect('http://localhost:8000');
 			socket.on('connect', function(){
-				alert("tjohoo");
+				//alert("tjohoo");
 				populate(actualTime);
 			});
 
@@ -42,23 +44,30 @@ head
 		
 			socket.on('move', function (data) {
 				var idt = data.m_id;
-				var leftt = data.m_left;
-				var topt = data.m_top;
-				$("#" + idt).attr("style", "top: " + topt + "px; left: " + leftt + "px;")
+				var leftt = data.m_left + "px";
+				var topt = data.m_top +"px";
+				$("#" + idt).css({'top': topt, 'left': leftt});
 			});
 			
 			//When a move is initiated by another client - should lock the other cleints version of the object
-			socket.on('startmove', function (data) {
+			socket.on('move_start', function (data) {
 				//alert(data.action);
 				var idt = data.m_id;
-				var leftt = data.m_left;
-				var topt = data.m_top;
-				$("#" + idt).attr("style", "top: " + topt + "px; left: " + leftt + "px; border: 4px dashed #900;")
+				var leftt = data.m_left + "px";
+				var topt = data.m_top + "px";
+				$("#" + idt).css({'top': topt, 'left': leftt, 'opacity': '0.3'})
+			});
+			
+			socket.on('move_stop', function (data) {
+				//alert(data.action);
+				var idt = data.m_id;
+				var leftt = data.m_left + "px";
+				var topt = data.m_top + "px";
+				$("#" + idt).css({'top': topt, 'left': leftt, 'opacity': '1'})
 			});
 			
 			//When a client starts a time travel, display a popup (just for debugging)
 			socket.on('timetravel', function (data) {
-				//alert(data.action);
 				var timetravel = data.time;
 				alert("A user moved to " + timetravel)
 			});
@@ -66,17 +75,23 @@ head
 			//When someone deletes something in the CloudBoard, re-populate every client
 			socket.on('delete', function (data) {
 				//alert(data.action);
-				populate(actualTime);
+				var idt = data.m_id;
+				$("#" + idt).remove();
+
 			});
 
+			socket.on('resize', function (data) {
+				var idt = data.m_id;
+				var heightt = data.m_height +"px";
+				var widtht = data.m_width +"px";
+				$("#" + idt).css({'width': widtht, 'height': heightt});
+
+			});
 			
 			//OK, lets set up the time slider
 			
 			var minDate=new Date('!{creationDate}');
-			alert(minDate);
-			
 			var maxDate=new Date('!{formattedDatetime}');
-			alert(maxDate);
 			var maxMonth = ((maxDate.getMonth())+1).toString();
 			
 			var maxDay = maxDate.getDate().toString();
@@ -115,13 +130,58 @@ head
 					socket.emit('timetravel',movedata);
 					populate(actualTime);
 				}
-			});   //DONE WITH THE TIMESLIDER!
+			});   
 			
-
+		//DONE WITH THE TIMESLIDER!
+			
+		
+		
+		
 		});
+		//DONE WITH THE ONDOCUMENTREADY
+		
+		//LETS FIX SOME OBJECTS TO THE SITE
 		function populate(actualTime) {
 			
-			$('.resizable' ).resizable();
+			$('.resizable' ).resizable({
+				
+				aspectRatio: true,
+				resize:function(e, ui){
+					var myid=$(this).attr('id');
+	
+					var mywidth=ui.size.width;
+					var myheight=ui.size.height;
+					$(this).addClass("ontop");
+					var resizedata = {
+						action: 'resize',
+						m_id: myid,
+						m_width: mywidth,
+						m_height: myheight
+					}
+					
+					socket.emit('resize', resizedata);
+				},
+				
+				
+				
+				stop: function(e, ui) {
+					var myid=$(this).attr('id');
+					var mywidth=ui.size.width;
+					var myheight=ui.size.height;
+					$(this).addClass("ontop");
+					var resizedata = {
+						action: 'resize_stop',
+						m_id: myid,
+						m_width: mywidth,
+						m_height: myheight
+					}
+
+					
+					socket.emit('resize_stop', resizedata);
+				}
+			
+			
+			});
 			$('.draggable' ).draggable({
 				start:function(e, ui){
 					var myid=$(this).attr('id');
@@ -130,13 +190,13 @@ head
 					var mytop=ui.position.top;
 					$(this).addClass("ontop");
 					var movedata = {
-						action: 'startmove',
+						action: 'move_start',
 						m_id: myid,
 						m_left: myleft,
 						m_top: mytop
 					}
 					
-					socket.emit('startmove', movedata);
+					socket.emit('move_start', movedata);
 				},
 				
 				drag:function(e, ui){
@@ -163,13 +223,13 @@ head
 					var mytop=ui.position.top;
 					$(this).removeClass("ontop");
 					var movedata = {
-						action: 'move',
+						action: 'move_stop',
 						m_id: myid,
 						m_left: myleft,
 						m_top: mytop
 					}
 				
-					socket.emit('stop', movedata);
+					socket.emit('move_stop', movedata);
 		
 					//alert("id: " + $(this).attr('id') + "position:" + ui.position.left + "," + ui.position.top);
 				}
@@ -185,8 +245,30 @@ head
 			});
 			
 			$('.kryss').click(function(e) {
-				var currentId = $(this).attr('id').substr(6);
-				socket.emit('delete', currentId);
+				var myid = $(this).attr('id').substr(6);
+				var deletedata = {
+						action: 'delete',
+						m_id: myid
+					}
+
+				socket.emit('delete', deletedata);
+				$("#" + currentId).remove();
+			});
+			
+			$('.comment').click(function(e) {
+				var myid = $(this).attr('id').substr(8);
+				alert(myid);
+				$("#myid").rotate({
+					bind:
+						{
+						click: function(){
+							$(this).rotate({ angle:0,animateTo:90,easing: $.easing.easeInOutExpo });
+						}
+					}
+			});
+
+				//socket.emit('delete', deletedata);
+				//$("#" + currentId).remove();
 			});
 		};
 	

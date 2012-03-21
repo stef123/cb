@@ -1,6 +1,19 @@
 - if (objekt.type == '3')
-	div.imagebox.draggable.resizable(id='#{objekt.id}', style='top:#{objekt.coord_x}px; left:#{objekt.coord_y}px;')
-		img(src='#{objekt.content}', alt='#{objekt.namn}', width='100%')
+	div.imagebox.draggable.resizable(id='#{objekt.id}', style='top:#{objekt.coord_x}px; left:#{objekt.coord_y}px; width:#{objekt.width}px; height:#{objekt.height}px;')
+		.objHeader
+			.header_title
+				p(id='#{objekt.id}')
+					#{objekt.id}
+		
+			.menuActivation
+				.kryss(id='kryss_#{objekt.id}')
+					img(src='images/x-on-dark-circle.png', width='14', height='14')
+	
+				.comment(id='comment_#{objekt.id}')
+					img(src='images/comment.png', width='14', height='14')
+			
+
+		img(src='#{objekt.content}', alt='#{objekt.namn}', width='100%', height='100%')
 		
 - if (objekt.type == '16')
 	div.m4vbox.draggable.resizable(id='#{objekt.id}', style='top:#{objekt.coord_x}px; left:#{objekt.coord_y}px;')

@@ -123,7 +123,6 @@ app.get('/', function(req, res) {
 
 	    console.log('PUTTADE UT INDEX.HTML');
 
-	
 });
 
 console.log('CloudBoard SERVER v 0.2.1 started on cb.no.de');
@@ -140,24 +139,23 @@ io.sockets.on('connection', function (socket) {
   });
     
  	socket.on('move', function (movedata) {
-    	console.log('TEST: ' + movedata.action);
+    	console.log('MOVE: ' + movedata.action);
     	if(movedata.m_top <60){
     
     		movedata.m_top = 60;
     	}
     io.sockets.emit('move', movedata);
-    //socket.broadcast.emit('move', movedata);
+    
   	});
   
   
-   	socket.on('startmove', function (movedata) {
-    	console.log('TEST: ' + movedata.action);
-    	io.sockets.emit('startmove', movedata);
-    	//socket.broadcast.emit('move', movedata);
-  	});
+   	socket.on('move_start', function (movedata) {
+    	console.log('MOVE_START: ' + movedata.action);
+    	io.sockets.emit('move_start', movedata);
+    	  	});
  
- 	socket.on('stop', function (movedata) {
-    	console.log('TEST: ' + movedata.action);
+ 	socket.on('move_stop', function (movedata) {
+    	console.log('MOVE_STOP: ' + movedata.action);
     	if(movedata.m_top <60){
     		movedata.m_top = 60;
     	}
@@ -169,22 +167,43 @@ io.sockets.on('connection', function (socket) {
     	
     	
     	
-    io.sockets.emit('move', movedata);
+    io.sockets.emit('move_stop', movedata);
     //socket.broadcast.emit('move', movedata);
   	});
  
   	socket.on('timetravel', function (traveldata) {
-    	console.log('TEST: ' + traveldata.time);
+    	console.log('TIMETRAVEL: ' + traveldata.time);
     	io.sockets.emit('timetravel', traveldata);
     	//socket.broadcast.emit('move', movedata);
   	});
   	socket.on('delete', function (deletedata) {
-   		// console.log('TEST: ' + delete.time);
+   		console.log('DELETE: ' + deletedata.m_id);
    	 	io.sockets.emit('delete', deletedata);
-    	//socket.broadcast.emit('move', movedata);
+    	
+    	mysql.query('UPDATE tbl_cb_objects SET deletionDatetime=\'' + getDate() + '\' WHERE id=' + deletedata.m_id + '', function
+    	
+    	selectCb(err, results, fields) {
+    		if (err) throw err;	
+		});
+    	
+    	
   	});
+	socket.on('resize', function (resizedata) {
+   		console.log('RESIZE: ' + resizedata.m_id);
+   	 	io.sockets.emit('resize', resizedata);
+    	
+  	});
+  	socket.on('resize_stop', function (resizedata) {
+   		console.log('RESIZE_STOP: ' + resizedata.m_id);
+   	 	//io.sockets.emit('resize_stop', resizedata);
 
-  
+  	
+  		mysql.query('UPDATE tbl_cb_objects SET height=' + resizedata.m_height + ', width=' + resizedata.m_width + ', updateDatetime=\'' + getDate() + '\' WHERE id=' + resizedata.m_id + '', function
+    	
+    	selectCb(err, results, fields) {
+    		if (err) throw err;	
+		});
+  	});
   
 });
 
