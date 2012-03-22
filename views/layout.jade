@@ -19,7 +19,7 @@ head
 
 	script(src='js/jQueryRotateCompressed.2.2.js')
 
-	script(src='http://localhost:8000/socket.io/socket.io.js')
+	script(src='http://cb.no.de:8000/socket.io/socket.io.js')
 
 	script(type='text/javascript', src='js/jquery.rightClick.js')
 	script(type='text/javascript', src='js/ajaxCall.js')
@@ -33,7 +33,7 @@ head
 	
 			//alert(yearNow + "-" + monthNow + "-" + dayNow);
 	
-			socket = io.connect('http://localhost:8000');
+			socket = io.connect('http://cb.no.de:8000');
 			socket.on('connect', function(){
 				//alert("tjohoo");
 				populate(actualTime);

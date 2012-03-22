@@ -23,6 +23,7 @@ function getDate() {
 	var dayNow = timeNow.getDate();
 
 
+
 	if(dayNow.length==1){
 
 		dayNow= "0" + dayNow;
@@ -35,7 +36,6 @@ function getDate() {
 	
 	return String(formattedDatetime);
 }
-
 
 
 formattedDatetime=getDate();
