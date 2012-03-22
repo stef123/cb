@@ -43,6 +43,7 @@ function getDate() {
 formattedDatetime=getDate();
 
 
+
 //var _mysql = require('mysql');
 var mysql = _mysql.createClient({
 	user: 'web82404_cb',
