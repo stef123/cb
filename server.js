@@ -4,9 +4,7 @@ var fs = require('fs');
 var sys = require('sys');
 var express = require('express');
 var expose = require('express-expose');
-var io = require('socket.io');
-
-io.listen(3000);
+var io = require('socket.io').listen(3000);
 var formattedDatetime;
 var resultSet;
 
