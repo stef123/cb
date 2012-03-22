@@ -10,6 +10,7 @@ var resultSet;
 
 var creationDate;
 
+
 function getDate() {
 
 	var timeNow = new Date();
