@@ -19,7 +19,6 @@ function getDate() {
 
 	if(monthNow.length <= 1){
 					
-
 	}
 	var dayNow = timeNow.getDate();
 
